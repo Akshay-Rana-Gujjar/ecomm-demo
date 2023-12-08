@@ -1,24 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import RestaurantDetails from "./pages/RestaurantDetails";
+import CartProvider from "./provider/cart";
+import Header from './components/Header';
+import Checkout from "./pages/Checkout";
+
+/**
+ * cart using provider
+ * api to show restuarant list
+ *
+ * Routes:
+ *  / - home
+ * /reastaurant/<id> - rest detail page
+ *  /cart -
+ * /checkout -
+ *
+ *
+ */
 
 function App() {
+
+  const HomeWithHeader = ()=><Header>
+    <Home />
+  </Header>
+
+  const RestaurantDetailsWithHeader  = ()=><Header>
+    <RestaurantDetails/>
+  </Header>
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CartProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomeWithHeader />} />
+          <Route path="/restaurant/:id" element={<RestaurantDetailsWithHeader  />} />
+          <Route path="/cart" element={<Home />} />
+          <Route path="/checkout" element={<Checkout />} />
+        </Routes>
+      </BrowserRouter>
+    </CartProvider>
   );
 }
 
